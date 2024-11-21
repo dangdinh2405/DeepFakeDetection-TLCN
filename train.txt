@@ -1,0 +1,9 @@
+python training/test.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:/TLCN/Main/training/weights/capsule_net_best.pth
+facexray_2024-11-17-21-46-32
+python training/test.py --detector_path ./training/config/detector/facexray.yaml --weights_path E:/TLCN/Main/logs/training/facexray_2024-11-17-21-46-32/test/avg/ckpt_best.pth
+
+python training/train.py --detector_path ./training/config/detector/facexray.yaml
+
+E:\TLCN\Main\logs\training\capsule_net_2024-11-17-10-22-00\test\avg
+
+python training/train.py --detector_path ./training/config/detector/facexray.yaml  --train_dataset "Celeb-DF-v2" --test_dataset "Celeb-DF-v2"

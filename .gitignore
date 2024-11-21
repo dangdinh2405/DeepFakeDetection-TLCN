@@ -1,0 +1,4 @@
+datasets
+training/weights
+training/pretrained
+logs/training
