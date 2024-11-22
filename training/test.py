@@ -1,3 +1,17 @@
+'''
+Reference:
+@inproceedings{DeepfakeBench_YAN_NEURIPS2023,
+ author = {Yan, Zhiyuan and Zhang, Yong and Yuan, Xinhang and Lyu, Siwei and Wu, Baoyuan},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Oh and T. Neumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+ pages = {4534--4565},
+ publisher = {Curran Associates, Inc.},
+ title = {DeepfakeBench: A Comprehensive Benchmark of Deepfake Detection},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/0e735e4b4f07de483cbe250130992726-Paper-Datasets_and_Benchmarks.pdf},
+ volume = {36},
+ year = {2023}
+}
+'''
 import os
 import numpy as np
 from os.path import join
@@ -8,6 +22,7 @@ import time
 import yaml
 import pickle
 from tqdm import tqdm
+
 from copy import deepcopy
 from PIL import Image as pil_image
 from metrics.utils import get_test_metrics
@@ -38,7 +53,7 @@ parser.add_argument('--detector_path', type=str,
                     help='path to detector YAML file')
 parser.add_argument("--test_dataset", nargs="+")
 parser.add_argument('--weights_path', type=str, 
-                    default='/training/weights/ckpt_epoch_9_best.pth')
+                    default='/training/weights/facexray_best.pth')
 args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -148,54 +163,6 @@ def test_epoch(model, test_data_loaders):
 def inference(model, data_dict):
     predictions = model(data_dict, inference=True)
     return predictions
-
-def test_single_image_preprocessed(model, image_tensor, label=None):
-    """
-    Hàm kiểm tra một ảnh đã được tiền xử lý.
-    
-    Args:
-        model: Mô hình đã huấn luyện.
-        image_tensor: Ảnh đầu vào đã qua tiền xử lý (tensor).
-        label: Nhãn thật của ảnh (nếu có, để đánh giá).
-
-    Returns:
-        result: Dictionary chứa kết quả, bao gồm dự đoán và chỉ số (nếu label được cung cấp).
-    """
-    import torch
-
-    # Đặt model vào chế độ eval
-    model.eval()
-
-    # Đảm bảo ảnh là tensor
-    if not isinstance(image_tensor, torch.Tensor):
-        raise ValueError("Input image_tensor phải là một torch.Tensor đã qua tiền xử lý.")
-
-    # Thêm batch dimension nếu chưa có
-    if image_tensor.ndim == 3:  # C x H x W
-        image_tensor = image_tensor.unsqueeze(0)
-
-    # Chuyển ảnh sang device của model
-    device = next(model.parameters()).device
-    image_tensor = image_tensor.to(device)
-
-    # Dự đoán
-    with torch.no_grad():
-        prediction = model(image_tensor)
-        prediction = torch.softmax(prediction, dim=1).cpu().numpy()  # Softmax để lấy xác suất
-
-    # Kết quả dự đoán
-    pred_class = prediction.argmax(axis=1)[0]  # Lớp có xác suất cao nhất
-
-    # Tính metrics (nếu có nhãn thật)
-    result = {"predicted_class": pred_class, "prediction_probabilities": prediction[0]}
-    if label is not None:
-        accuracy = (pred_class == label)
-        result["true_label"] = label
-        result["accuracy"] = accuracy
-
-    return result
-
-
 
 def main():
     # parse options and load config

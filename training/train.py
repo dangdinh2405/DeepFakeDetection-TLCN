@@ -1,3 +1,17 @@
+'''
+Reference:
+@inproceedings{DeepfakeBench_YAN_NEURIPS2023,
+ author = {Yan, Zhiyuan and Zhang, Yong and Yuan, Xinhang and Lyu, Siwei and Wu, Baoyuan},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Oh and T. Neumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+ pages = {4534--4565},
+ publisher = {Curran Associates, Inc.},
+ title = {DeepfakeBench: A Comprehensive Benchmark of Deepfake Detection},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/0e735e4b4f07de483cbe250130992726-Paper-Datasets_and_Benchmarks.pdf},
+ volume = {36},
+ year = {2023}
+}
+'''
 import os
 import argparse
 from os.path import join
@@ -12,7 +26,6 @@ from datetime import timedelta
 from copy import deepcopy
 from PIL import Image as pil_image
 
-import torch
 import torch.nn as nn
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
@@ -33,7 +46,7 @@ from logger import create_logger, RankFilter
 
 parser = argparse.ArgumentParser(description='Process some paths.')
 parser.add_argument('--detector_path', type=str,
-                    default='/data/home/zhiyuanyan/DeepfakeBenchv2/training/config/detector/sbi.yaml',
+                    default='/training/config/detector/capsule_net.yaml',
                     help='path to detector YAML file')
 parser.add_argument("--train_dataset", nargs="+")
 parser.add_argument("--test_dataset", nargs="+")

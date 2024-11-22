@@ -25,6 +25,18 @@ Reference:
   organization={IEEE}
 }
 
+@inproceedings{DeepfakeBench_YAN_NEURIPS2023,
+ author = {Yan, Zhiyuan and Zhang, Yong and Yuan, Xinhang and Lyu, Siwei and Wu, Baoyuan},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Oh and T. Neumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+ pages = {4534--4565},
+ publisher = {Curran Associates, Inc.},
+ title = {DeepfakeBench: A Comprehensive Benchmark of Deepfake Detection},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/0e735e4b4f07de483cbe250130992726-Paper-Datasets_and_Benchmarks.pdf},
+ volume = {36},
+ year = {2023}
+}
+
 GitHub Reference:
 https://github.com/niyunsheng/CORE
 '''
