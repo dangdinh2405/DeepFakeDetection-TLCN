@@ -9,16 +9,6 @@ import torchvision.transforms as transforms
 
 from detectors import DETECTOR
 
-import argparse
-
-parser = argparse.ArgumentParser(description='Process some paths.')
-parser.add_argument('--detector_path', type=str, 
-                    default='E:/TLCN/Main/training/config/detector/facexray.yaml',
-                    help='path to detector YAML file')
-parser.add_argument('--weights_path', type=str, 
-                    default='E:/TLCN/Main/training/weights/facexray_best.pth')
-args = parser.parse_args()
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def init_seed(config):
@@ -30,7 +20,7 @@ def init_seed(config):
         torch.cuda.manual_seed_all(config['manualSeed'])
 
 @torch.no_grad()
-def inference(model, data_dict):
+def call_model(model, data_dict):
     predictions = model(data_dict, inference=True)
     return predictions
 
@@ -60,14 +50,10 @@ def create_data_dict(image_path, device):
 
     return data_dict
 
-def main():
-    with open(args.detector_path, 'r') as f:
+def load_model(weights_path, detector_path):
+    with open(detector_path, 'r') as f:
         config = yaml.safe_load(f)
-    weights_path = None
-    if args.weights_path:
-        config['weights_path'] = args.weights_path
-        weights_path = args.weights_path
-    
+
     init_seed(config)
 
     if config['cudnn']:
@@ -86,16 +72,17 @@ def main():
         print('===> Load checkpoint done!')
     else:
         print('Fail to load the pre-trained weights')
+    return model
 
+def infer(model, image_path):
     prediction_lists = []
-    img = create_data_dict('E:/TLCN/Main/training/imagetest/2_pre.png',device)
+    img = create_data_dict(image_path, device)
     model.eval()
-    predictions = inference(model, img)
+    predictions = call_model(model, img)
     logits = predictions['cls']
     prob = torch.sigmoid(logits)
     prediction_lists = list(prob[:, 1].cpu().detach().numpy())
     print(prediction_lists)
     print('===> Test Done!')
+    return prediction_lists[0], 1 - prediction_lists[0]
 
-if __name__ == '__main__':
-    main()

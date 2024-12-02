@@ -25,8 +25,6 @@ def create_lmdb_dataset(source_folder, lmdb_path, dataset_name, map_size):
     with db.begin(write=True) as txn:
         print(f"Source folder: {source_folder}")
         for root, dirs, files in os.walk(source_folder,followlinks=True):
-            print("dcmmmmmmmmmmmmmm")
-            print(root)
             if 'video' in root:
                 continue
             for file in files:

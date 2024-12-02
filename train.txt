@@ -7,3 +7,5 @@ python training/train.py --detector_path ./training/config/detector/facexray.yam
 E:\TLCN\Main\logs\training\capsule_net_2024-11-17-10-22-00\test\avg
 
 python training/train.py --detector_path ./training/config/detector/facexray.yaml  --train_dataset "Celeb-DF-v2" --test_dataset "Celeb-DF-v2"
+
+python training/UI.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:/TLCN/Main/training/weights/capsule_net_best.pth
