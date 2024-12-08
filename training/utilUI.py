@@ -81,7 +81,11 @@ def infer(model, image_path):
     predictions = call_model(model, img)
     logits = predictions['cls']
     prob = torch.sigmoid(logits)
+
     prediction_lists = list(prob[:, 1].cpu().detach().numpy())
+    feature_lists = list(predictions['feat'].cpu().detach().numpy())
+
+    print(feature_lists)
     print(prediction_lists)
     print('===> Test Done!')
     return prediction_lists[0], 1 - prediction_lists[0]

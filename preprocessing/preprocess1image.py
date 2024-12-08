@@ -82,12 +82,12 @@ def extract_aligned_face_dlib(face_detector, predictor, image, res=256, mask=Non
         return None, None, None
 
 # Đọc ảnh và xử lý
-image_path = 'E:/TLCN/Main/training/imagetest/2.png'
+image_path = 'E:/TLCN/Main/training/imagetest/5.png'
 image = cv2.imread(image_path)
 
 cropped_face, landmarks, mask = extract_aligned_face_dlib(face_detector, face_predictor, image, res=256)
 
-output_path = 'E:/TLCN/Main/training/imagetest/2_pre.png'
+output_path = 'E:/TLCN/Main/training/imagetest/5_pre.png'
 cv2.imwrite(output_path, cropped_face)
 
 print(f"Image saved at {output_path}")
