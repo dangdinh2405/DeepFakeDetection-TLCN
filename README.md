@@ -20,5 +20,5 @@ File `*.pth` tải về ở [đây](https://drive.google.com/drive/folders/1RvU8
 ## Thư viện cần thiết để sử dụng
 Cài đặt sử dụng conda. Chạy câu lệnh
 ```
-conda create -n <environment-name> --file req.txt
+conda create -n <environment-name> --file req.txt python=3.7.2
 ```
