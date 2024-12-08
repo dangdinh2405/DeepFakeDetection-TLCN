@@ -15,3 +15,7 @@ Chạy file `mainUI.py` trong thư mục `training`. Đảm bảo các file yaml
 File `*.pth` tải về ở [đây](https://drive.google.com/drive/folders/1RvU86NZLiGQy78_C4LPcFhL2eAW8cDtE?usp=sharing) và nằm trong thư mục `training\weights`.
 
 ## Thư viện cần thiết để sử dụng
+Cài đặt sử dụng conda. Chạy câu lệnh
+```
+conda create -n <environment-name> --file req.txt
+```
