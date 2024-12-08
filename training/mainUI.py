@@ -37,11 +37,11 @@ class ImageClassifierApp(QMainWindow):
         self.setWindowIcon(QIcon("training/icon/icon.png"))
         self.initUI()
 
-        self.detector_path_capsule = 'E:/TLCN/Main/training/config/detector/capsule_net.yaml'
-        self.weights_path_capsule = 'E:/TLCN/Main/training/weights/capsule_net_best.pth'
+        self.detector_path_capsule = 'training/config/detector/capsule_net.yaml'
+        self.weights_path_capsule = 'training/weights/capsule_net_best.pth'
 
-        self.detector_path_facexray = 'E:/TLCN/Main/training/config/detector/facexray.yaml'
-        self.weights_path_facexray = 'E:/TLCN/Main/training/weights/facexray_best.pth'
+        self.detector_path_facexray = 'training/config/detector/facexray.yaml'
+        self.weights_path_facexray = 'training/weights/facexray_best.pth'
 
         self.model = None
         
