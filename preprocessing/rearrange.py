@@ -1,59 +1,3 @@
-# author: Zhiyuan Yan
-# email: zhiyuanyan@link.cuhk.edu.cn
-# date: 2023-03-29
-# description: Data pre-processing script for deepfake dataset.
-
-
-"""
-After running this code, it will generates a json file looks like the below structure for re-arrange data.
-
-{
-    "FaceForensics++": {
-        "Deepfakes": {
-            "video1": {
-                "label": "fake",
-                "frames": [
-                    "/path/to/frames/video1/frame1.png",
-                    "/path/to/frames/video1/frame2.png",
-                    ...
-                ]
-            },
-            "video2": {
-                "label": "fake",
-                "frames": [
-                    "/path/to/frames/video2/frame1.png",
-                    "/path/to/frames/video2/frame2.png",
-                    ...
-                ]
-            },
-            ...
-        },
-        "original_sequences": {
-            "youtube": {
-                "video1": {
-                    "label": "real",
-                    "frames": [
-                        "/path/to/frames/video1/frame1.png",
-                        "/path/to/frames/video1/frame2.png",
-                        ...
-                    ]
-                },
-                "video2": {
-                    "label": "real",
-                    "frames": [
-                        "/path/to/frames/video2/frame1.png",
-                        "/path/to/frames/video2/frame2.png",
-                        ...
-                    ]
-                },
-                ...
-            }
-        }
-    }
-}
-"""
-
-
 import os
 import glob
 import re
@@ -65,16 +9,6 @@ from pathlib import Path
 
 
 def generate_dataset_file(dataset_name, dataset_root_path, output_file_path, compression_level='c23', perturbation = 'end_to_end'):
-    """
-    Description:
-        - Generate a JSON file containing information about the specified datasets' videos and frames.
-    Args:
-        - dataset: The name of the dataset.
-        - dataset_path: The path to the dataset.
-        - output_file_path: The path to the output JSON file.
-        - compression_level: The compression level of the dataset.
-    """
-
     # Initialize an empty dictionary to store dataset information.
     dataset_dict = {}
 
@@ -121,7 +55,12 @@ def generate_dataset_file(dataset_name, dataset_root_path, output_file_path, com
             video_to_mode[d2] = 'test'
             video_to_mode[d1+'_'+d2] = 'test'
             video_to_mode[d2+'_'+d1] = 'test'
-        
+
+        print("\nKiểm tra riêng video '000_003':")
+        if '000_003' in video_to_mode:
+            print(f"'000_003' có trong từ điển, mode = {video_to_mode['000_003']}")
+        else:
+            print("'000_003' KHÔNG có trong từ điển")
         
         # FaceForensics++ real dataset
         if os.path.isdir(dataset_path) and os.path.isdir(os.path.join(dataset_path, 'original_sequences')):

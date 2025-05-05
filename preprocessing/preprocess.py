@@ -466,6 +466,10 @@ if __name__ == '__main__':
         sub_dataset_names = ['original_videos', 'method_A', 'method_B']
         sub_dataset_paths = [Path(os.path.join(dataset_path, name)) for name in sub_dataset_names]
 
+    elif dataset_name == 'FMFCCV':
+        sub_dataset_names = ['real', 'fake']
+        sub_dataset_paths = [Path(os.path.join(dataset_path, name)) for name in sub_dataset_names]
+
     ## DFDC-test
     elif dataset_name == 'DFDC':
         sub_dataset_names = ['test', 'train']

@@ -1,9 +1,7 @@
 # model setting
-pretrained: E:/TLCN/Main/training/pretrained/xception-b5690688.pth    # path to a pre-trained model, if using one
+pretrained: ./training/pretrained/efficientnet-b4-6ed6700e   # path to a pre-trained model, if using one
 model_name: facexray   # model name
 backbone_name: efficientnetb4  # backbone name
-lmdb:  './datasets/LMDBs'
-dataset_json_folder: ./preprocessing/dataset_json
 
 #backbone setting
 backbone_config:
@@ -14,8 +12,8 @@ backbone_config:
 
 # dataset
 all_dataset: [FaceForensics++, FF-F2F, FF-DF, FF-FS, FF-NT, FaceShifter, DeepFakeDetection, Celeb-DF-v1, Celeb-DF-v2, DFDCP, DFDC, DeeperForensics-1.0, UADFV]
-train_dataset: [FF-NT]
-test_dataset: [FaceForensics++] #FaceForensics++, FF-F2F, FF-DF, FF-FS, FF-NT, 
+train_dataset: [Celeb-DF-v2]
+test_dataset: [FaceForensics++, Celeb-DF-v2]
 dataset_type: blend
 
 compression: c23  # compression-level for videos
@@ -29,7 +27,7 @@ with_landmark: false   # whether to include facial landmark information in the i
 
 
 # data augmentation
-use_data_augmentation: false  # Add this flag to enable/disable data augmentation
+use_data_augmentation: true  # Add this flag to enable/disable data augmentation
 data_aug:
   flip_prob: 0.5
   rotate_prob: 0.5
@@ -51,11 +49,11 @@ optimizer:
   # choose between 'adam' and 'sgd'
   type: adam
   adam:
-    lr: 0.0002  # learning rate
+    lr: 0.0001  # learning rate
     beta1: 0.9  # beta1 for Adam optimizer
     beta2: 0.999 # beta2 for Adam optimizer
     eps: 0.00000001  # epsilon for Adam optimizer
-    weight_decay: 0.0005  # weight decay for regularization
+    weight_decay: 0.05  # weight decay for regularization
     amsgrad: false
   sgd:
     lr: 0.0002  # learning rate
@@ -85,38 +83,3 @@ metric_scoring: auc   # metric for evaluation (auc, acc, eer, ap)
 
 cuda: true   # whether to use CUDA acceleration
 cudnn: true   # whether to use CuDNN for convolution operations
-
-label_dict:
-  # DFD
-  DFD_fake: 1
-  DFD_real: 0
-  FaceShifter: 1
-  FF-FH: 1
-  # FF++ + FaceShifter(FF-real+FF-FH)
-  # ucf specific label setting
-  FF-DF: 1
-  FF-F2F: 2
-  FF-FS: 3
-  FF-NT: 4
-  FF-real: 0
-  # CelebDF
-  CelebDFv1_real: 0
-  CelebDFv1_fake: 1
-  CelebDFv2_real: 0
-  CelebDFv2_fake: 1
-  # DFDCP
-  DFDCP_Real: 0
-  DFDCP_FakeA: 1
-  DFDCP_FakeB: 1
-  # DFDC
-  DFDC_Fake: 1
-  DFDC_Real: 0
-  # DeeperForensics-1.0
-  DF_fake: 1
-  DF_real: 0
-  # UADFV
-  UADFV_Fake: 1
-  UADFV_Real: 0
-  # roop
-  roop_Fake: 1
-  roop_Real: 0

@@ -1,46 +1,3 @@
-'''
-# author: Zhiyuan Yan
-# email: zhiyuanyan@link.cuhk.edu.cn
-# date: 2023-0706
-# description: Class for the CapsuleNetDetector
-
-Functions in the Class are summarized as:
-1. __init__: Initialization
-2. build_backbone: Backbone-building
-3. build_loss: Loss-function-building
-4. features: Feature-extraction
-5. classifier: Classification
-6. get_losses: Loss-computation
-7. get_train_metrics: Training-metrics-computation
-8. get_test_metrics: Testing-metrics-computation
-9. forward: Forward-propagation
-
-Reference:
-@inproceedings{nguyen2019capsule,
-  title={Capsule-forensics: Using capsule networks to detect forged images and videos},
-  author={Nguyen, Huy H and Yamagishi, Junichi and Echizen, Isao},
-  booktitle={ICASSP 2019-2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-  pages={2307--2311},
-  year={2019},
-  organization={IEEE}
-}
-
-@inproceedings{DeepfakeBench_YAN_NEURIPS2023,
- author = {Yan, Zhiyuan and Zhang, Yong and Yuan, Xinhang and Lyu, Siwei and Wu, Baoyuan},
- booktitle = {Advances in Neural Information Processing Systems},
- editor = {A. Oh and T. Neumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
- pages = {4534--4565},
- publisher = {Curran Associates, Inc.},
- title = {DeepfakeBench: A Comprehensive Benchmark of Deepfake Detection},
- url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/0e735e4b4f07de483cbe250130992726-Paper-Datasets_and_Benchmarks.pdf},
- volume = {36},
- year = {2023}
-}
-
-GitHub Reference:
-https://github.com/niyunsheng/CORE
-'''
-
 import os
 import datetime
 import numpy as np
@@ -77,8 +34,8 @@ class CapsuleNetDetector(AbstractDetector):
         self.fea_ext = FeatureExtractor()
         self.fea_ext.apply(self.weights_init)
 
-        self.NO_CAPS = 10
-        self.routing_stats = RoutingLayer(num_input_capsules=self.NO_CAPS, num_output_capsules= self.num_classes, data_in=8, data_out=4, num_iterations=2)
+        self.NO_CAPS = 3
+        self.routing_stats = RoutingLayer(num_input_capsules=self.NO_CAPS, num_output_capsules= self.num_classes, data_in=8, data_out=4, num_iterations=1)
 
     def build_backbone(self, config):
         ...  # do not need one specific backbone for capsule net
@@ -162,24 +119,25 @@ class VggExtractor(nn.Module):
 class FeatureExtractor(nn.Module):
     def __init__(self):
         super(FeatureExtractor, self).__init__()
-        self.NO_CAPS = 10 ##mark yxh
+        self.NO_CAPS = 3 ##mark yxh
         self.capsules = nn.ModuleList([
             nn.Sequential(
                 nn.Conv2d(256, 64, kernel_size=3, stride=1, padding=1),
                 nn.BatchNorm2d(64),
+                nn.Dropout(0.5),  # Thêm Dropout
                 nn.ReLU(),
                 nn.Conv2d(64, 16, kernel_size=3, stride=1, padding=1),
                 nn.BatchNorm2d(16),
+                nn.Dropout(0.5),  # Thêm Dropout
                 nn.ReLU(),
                 StatsNet(),
-
                 nn.Conv1d(2, 8, kernel_size=5, stride=2, padding=2),
                 nn.BatchNorm1d(8),
+                nn.Dropout(0.3),  # Thêm Dropout
                 nn.Conv1d(8, 1, kernel_size=3, stride=1, padding=1),
                 nn.BatchNorm1d(1),
                 View(-1, 8),
-                )
-                for _ in range(self.NO_CAPS)]
+            ) for _ in range(self.NO_CAPS)]
         )
 
     def squash(self, tensor, dim):

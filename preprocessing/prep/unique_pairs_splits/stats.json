@@ -1,0 +1,15 @@
+{
+  "total_videos": 1083,
+  "train_videos": 758,
+  "val_videos": 162,
+  "test_videos": 163,
+  "used_train_videos": 758,
+  "used_val_videos": 162,
+  "used_test_videos": 162,
+  "train_pairs": 379,
+  "val_pairs": 81,
+  "test_pairs": 81,
+  "unused_train_videos": 0,
+  "unused_val_videos": 0,
+  "unused_test_videos": 1
+}

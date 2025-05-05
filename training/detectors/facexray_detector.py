@@ -76,20 +76,23 @@ class FaceXrayDetector(AbstractDetector):
         self.post_process = nn.Sequential(
             nn.Conv2d(in_channels=720, out_channels=256, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(256),
-            nn.ReLU(),
+            nn.GELU(),
+            nn.Dropout2d(0.5),
             nn.Conv2d(in_channels=256, out_channels=128, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(128),
-            nn.ReLU(),
+            nn.GELU(),
+            nn.Dropout2d(0.5),
             nn.Conv2d(in_channels=128, out_channels=1, kernel_size=1, stride=1, padding=0),
             nn.Upsample(size=(256, 256), mode='bilinear', align_corners=True),
         )
         self.fc = nn.Sequential(
-            nn.Linear(128*128, 1024),
-            nn.BatchNorm1d(1024),
-            nn.ReLU(),
-            nn.Linear(1024, 128),
+            nn.Linear(128*128, 512),
+            nn.BatchNorm1d(512),
+            nn.GELU(),
+            nn.Dropout(0.5),
+            nn.Linear(512, 128),
             nn.BatchNorm1d(128),
-            nn.ReLU(),
+            nn.GELU(),
             nn.Linear(128, 2),
         )
 

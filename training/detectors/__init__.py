@@ -13,3 +13,5 @@ from .facexray_detector import FaceXrayDetector
 from .capsule_net_detector import CapsuleNetDetector
 from .ucf_detector import UCFDetector
 from .videomae_detector import VideoMAEDetector
+from .i3d_detector import I3DDetector
+from .f3net_detector import F3netDetector

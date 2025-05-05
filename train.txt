@@ -1,10 +1,21 @@
 python training/test.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:/TLCN/Main/training/weights/capsule_net_best.pth
 facexray_2024-11-17-21-46-32
+
 python training/test.py --detector_path ./training/config/detector/facexray.yaml --weights_path E:\TLCN\Main\training\weights\facexray_best.pth
 
 python training/test.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:\TLCN\Main\training\weights\capsule_net_best.pth
 
+python training/test.py --detector_path ./training/config/detector/f3net.yaml --weights_path E:\TLCN\Main\logs\training\Done\f3net_2025-04-02-17-00-13\test\avg\ckpt_best.pth
+
+python training/test.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:\TLCN\Main\logs\training\Done\capsule_net_2025-04-01-12-36-04\test\avg\ckpt_best.pth
+
 python training/train.py --detector_path ./training/config/detector/facexray.yaml
+
+python training/train.py --detector_path ./training/config/detector/capsule_net.yaml
+
+python training/train.py --detector_path ./training/config/detector/i3d.yaml
+
+python training/train.py --detector_path ./training/config/detector/f3net.yaml
 
 E:\TLCN\Main\logs\training\capsule_net_2024-11-17-10-22-00\test\avg
 
