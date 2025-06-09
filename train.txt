@@ -9,6 +9,10 @@ python training/test.py --detector_path ./training/config/detector/f3net.yaml --
 
 python training/test.py --detector_path ./training/config/detector/capsule_net.yaml --weights_path E:\TLCN\Main\logs\training\Done\capsule_net_2025-04-01-12-36-04\test\avg\ckpt_best.pth
 
+E:\TLCN\Web\backend\src\utils\nn\weight
+
+python training/test.py --detector_path ./training/config/detector/f3net.yaml --weights_path E:/TLCN/Web/backend/src/utils/nn/weight/f3_net_vc.pth
+
 python training/train.py --detector_path ./training/config/detector/facexray.yaml
 
 python training/train.py --detector_path ./training/config/detector/capsule_net.yaml
